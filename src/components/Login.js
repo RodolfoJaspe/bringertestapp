@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React,{useState} from 'react'
 import { useNavigate } from 'react-router-dom';
+import { currentUrl } from '../utils/backendUrl';
+
 
 function Login() {
 
@@ -22,11 +24,11 @@ function Login() {
     }
 
     const loginUser = user => {
-        axios.post("https://bringertestapp.herokuapp.com/api/users/login/", user)
+        axios.post(`${currentUrl}/api/users/login/`, user)
             .then(res => {
                 console.log(res)
                 localStorage.setItem('token', res.data.token)
-                navigate("/account")
+                navigate(`/users/${res.data.user.user_id}`)
             })
             .catch(err => {
                 console.log(err)
@@ -67,6 +69,10 @@ function Login() {
                 <button>Submit</button>
             </div>         
         </form>
+        <div>
+            <p>not a member?</p>
+            <button onClick={() => navigate("/register")}>Register</button>
+        </div>
     </div>
   )
 }

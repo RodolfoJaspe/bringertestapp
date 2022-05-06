@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React,{useState} from 'react'
 import { useNavigate } from 'react-router-dom';
+import { currentUrl } from '../utils/backendUrl';
+
 
 function Register() {
 
@@ -22,11 +24,11 @@ function Register() {
     }
 
     const createUser = user => {
-        axios.post("https://bringertestapp.herokuapp.com/api/users/register/", user)
+        axios.post(`${currentUrl}/api/users/register/`, user)
             .then(res => {
                 console.log(res)
                 localStorage.setItem('token', res.data.token)
-                navigate("/account")
+                navigate(`/users/${res.data.newUser.user_id}`)
             })
             .catch(err => {
                 console.log(err)
@@ -40,32 +42,39 @@ function Register() {
     }
 
   return (
-    <form onSubmit={formSubmit}>
+    <div>
+        <form onSubmit={formSubmit}>
+            <div>
+                <h2>Register</h2>
+                <label htmlFor="username">Username
+                    <input
+                        name="username"
+                        id="username"
+                        type="text"
+                        onChange={changeHandler}
+                        value={user.username}
+                        placeholder="enter a username" 
+                    />
+                </label>
+                <label htmlFor="password">Password
+                    <input
+                        name="password"
+                        id="password"
+                        type="text"
+                        onChange={changeHandler}
+                        value={user.password}
+                        placeholder="enter a password" 
+                    />
+                </label>
+                <button>Submit</button>
+            </div>         
+        </form> 
         <div>
-            <h2>Register</h2>
-            <label htmlFor="username">Username
-                <input
-                    name="username"
-                    id="username"
-                    type="text"
-                    onChange={changeHandler}
-                    value={user.username}
-                    placeholder="enter a username" 
-                />
-            </label>
-            <label htmlFor="password">Password
-                <input
-                    name="password"
-                    id="password"
-                    type="text"
-                    onChange={changeHandler}
-                    value={user.password}
-                    placeholder="enter a password" 
-                />
-            </label>
-            <button>Submit</button>
-        </div>         
-    </form>
+            <p>already a member?</p>
+            <button onClick={() => navigate("/login")}>Login</button>
+        </div>
+    </div>
+    
   )
 }
 

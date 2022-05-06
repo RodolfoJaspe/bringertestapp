@@ -12,12 +12,12 @@ function App() {
     <Router>
         <div className="App">
             <header className="App-header">
-                <h1>Bringer</h1>
+                <h1>BPS</h1>
                 <Routes>
                     <Route exact path="/" element={<Landing />} />
                     <Route path="/login" element={<Login />}/>
                     <Route path="/register" element={<Register />}/>
-                    <Route path ="/account" element={<Account />} />
+                    <Route path ="/users/:user_id" element={<Account />} />
                 </Routes>
             </header>
         </div>  
