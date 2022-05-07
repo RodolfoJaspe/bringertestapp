@@ -44,7 +44,7 @@ function Login() {
     <div>
         <form onSubmit={formSubmit}>
             <div>
-                <h2>Login</h2>
+                <h2>Sign in</h2>
                 <label htmlFor="username">Username
                     <input
                         name="username"

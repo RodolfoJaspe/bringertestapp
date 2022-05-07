@@ -64,7 +64,6 @@ function Account() {
         <Logout />
         {user? <h3>Welcome {user.username}</h3>: null} 
         <div>
-            <h4>BPS Tracking</h4>
             <p>Enter your tracking number</p>
             <form onSubmit={formSubmit}>
                 <input 

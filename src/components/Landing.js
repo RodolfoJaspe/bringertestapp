@@ -6,7 +6,7 @@ function Landing() {
   const navigate = useNavigate()
   return (
     <div>
-        <button onClick={() => navigate("/login")}>Login</button>
+        <button onClick={() => navigate("/login")}>Sign in</button>
         <button onClick={() => navigate("/register")}>Register</button>
     </div>
   )
