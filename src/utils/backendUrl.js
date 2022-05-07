@@ -1,3 +1,2 @@
-const backendUrl = "https://bringertestapp.herokuapp.com";
-const localUrl = "http://localhost:5000";
-export const currentUrl = localUrl;
+export const currentUrl = "https://bringertestapp.herokuapp.com";
+
