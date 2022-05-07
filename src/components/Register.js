@@ -60,7 +60,7 @@ function Register() {
                     <input
                         name="password"
                         id="password"
-                        type="text"
+                        type="password"
                         onChange={changeHandler}
                         value={user.password}
                         placeholder="enter a password" 
