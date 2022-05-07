@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React,{useState} from 'react'
+import React,{useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { currentUrl } from '../utils/backendUrl';
 
@@ -27,7 +27,7 @@ function Login() {
         axios.post(`${currentUrl}/api/users/login/`, user)
             .then(res => {
                 console.log(res)
-                localStorage.setItem('token', res.data.token)
+                window.localStorage.setItem('token', res.data.token)
                 navigate(`/users/${res.data.user.user_id}`)
             })
             .catch(err => {
@@ -38,7 +38,6 @@ function Login() {
     const formSubmit = e => {
         e.preventDefault();
         loginUser(user)
-        setUser(initialUser)
     }
 
   return (

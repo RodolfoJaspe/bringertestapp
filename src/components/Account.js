@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'; 
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Logout from './Logout';
 import { currentUrl } from '../utils/backendUrl';
 
-
-const headers = {
-    Accept: "application/json",
-    Authorization: window.localStorage.getItem('token')
-}
-
-const trackerHeaders = {
-    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6ImFjY2VzcyJ9.eyJpYXQiOjE2NTExNDY2MTcsImV4cCI6MTY4MjY4MjYxNywiYXVkIjoiaHR0cHM6Ly9icmluZ2VycGFyY2VsLmNvbSIsImlzcyI6ImZlYXRoZXJzIiwic3ViIjoiNTI1eXM2YWh4d3UyIiwianRpIjoiMDY5YjIxZTgtNTdjZi00YmE2LTk1ODctMjJkYmViMDg4OTNhIn0.wTcGGMWd6wf3F68K6cgZcmEyiNv6EfVZsvttbzIwtIE"
-}
-
 function Account() {
+
+    const navigate = useNavigate()
+
+    const headers = {
+        Accept: "application/json",
+        Authorization: window.localStorage.getItem('token')
+    }
+    
+    const trackerHeaders = {
+        Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6ImFjY2VzcyJ9.eyJpYXQiOjE2NTExNDY2MTcsImV4cCI6MTY4MjY4MjYxNywiYXVkIjoiaHR0cHM6Ly9icmluZ2VycGFyY2VsLmNvbSIsImlzcyI6ImZlYXRoZXJzIiwic3ViIjoiNTI1eXM2YWh4d3UyIiwianRpIjoiMDY5YjIxZTgtNTdjZi00YmE2LTk1ODctMjJkYmViMDg4OTNhIn0.wTcGGMWd6wf3F68K6cgZcmEyiNv6EfVZsvttbzIwtIE"
+    }
 
     const {user_id} = useParams()
     const [user, setUser] = useState()
     const [trackingNumber, setTrackingNumber] = useState("BPS65O4WYLBWWBR")
     const [packageInfo, setPackageInfo] = useState(null)
+
+    useEffect(() => {
+        fetchAccount(user_id)
+    },[user_id])
 
     const fetchAccount = () => {
         axios.get(`${currentUrl}/api/users/${user_id}`, {headers})
@@ -29,12 +34,9 @@ function Account() {
             })
             .catch(err => {
                     console.log(err)
+                    navigate("/")
             })
     }
-
-    useEffect(() => {
-        setTimeout(fetchAccount(),1000) //to allow time for the currentUrl and user_id //
-    },[])
 
     const changeHandler = e => {
         e.persist();

@@ -27,7 +27,7 @@ function Register() {
         axios.post(`${currentUrl}/api/users/register/`, user)
             .then(res => {
                 console.log(res)
-                localStorage.setItem('token', res.data.token)
+                window.localStorage.setItem('token', res.data.token)
                 navigate(`/users/${res.data.newUser.user_id}`)
             })
             .catch(err => {
