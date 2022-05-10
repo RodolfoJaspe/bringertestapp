@@ -21,6 +21,7 @@ function Account() {
     const [user, setUser] = useState()
     const [trackingNumber, setTrackingNumber] = useState("BPS65O4WYLBWWBR")
     const [packageInfo, setPackageInfo] = useState(null)
+    const [packageInfoFromCatch, setPackageInfoFromCatch] = useState(null)
 
     useEffect(() => {
         fetchAccount(user_id)
@@ -46,11 +47,14 @@ function Account() {
     const search = number => {
         axios.get(` https://bps.bringer.dev/public/api/v2/get/parcel/tracking.json?tracking_number=${number}`, {trackerHeaders})
             .then(res => {
-                console.log("success" + res)
+                console.log(res.data)
+                setPackageInfoFromCatch(null)
+                setPackageInfo(res.data)
             })
             .catch(err => {
                 console.log(err.response.data) //the data is coming back nested inside an error response//
-                setPackageInfo(err.response.data.data.label)
+                setPackageInfo(null)
+                setPackageInfoFromCatch(err.response.data.data.label)
             })
     }
 
@@ -76,24 +80,42 @@ function Account() {
                 <button>Search</button>
             </form>
             <div>
-                {packageInfo? 
+                {packageInfoFromCatch? 
                 <div>
-                    <p>Tracking Number: {packageInfo.trackingNumber}</p>
-                    <p>Model: {packageInfo.model}</p>
-                    <p>Parcel type: {packageInfo.parcel.parcelType}</p> 
-                    <p>Recipient: {packageInfo.parcel.recipient.firstName} {packageInfo.parcel.recipient.lastName}</p>
+                    <p>Tracking Number: {packageInfoFromCatch.trackingNumber}</p>
+                    <p>Model: {packageInfoFromCatch.model}</p>
+                    <p>Parcel type: {packageInfoFromCatch.parcel.parcelType}</p> 
+                    <p>Recipient: {packageInfoFromCatch.parcel.recipient.firstName} {packageInfoFromCatch.parcel.recipient.lastName}</p>
                     <p>Address: {` 
-                        ${packageInfo.parcel.recipient.address.address_detail.street}
+                        ${packageInfoFromCatch.parcel.recipient.address.address_detail.street}
                         , 
-                        ${packageInfo.parcel.recipient.address.address_detail.streetNumber}, 
-                        ${packageInfo.parcel.recipient.address.address_detail.streetLine2}, 
-                        ${packageInfo.parcel.recipient.address.address_detail.city} -  
-                        ${packageInfo.parcel.recipient.address.address_detail.state}, 
-                        ${packageInfo.parcel.recipient.address.address_detail.postalCode},
-                        ${packageInfo.parcel.recipient.address.address_detail.country.name}`}
+                        ${packageInfoFromCatch.parcel.recipient.address.address_detail.streetNumber}, 
+                        ${packageInfoFromCatch.parcel.recipient.address.address_detail.streetLine2}, 
+                        ${packageInfoFromCatch.parcel.recipient.address.address_detail.city} -  
+                        ${packageInfoFromCatch.parcel.recipient.address.address_detail.state}, 
+                        ${packageInfoFromCatch.parcel.recipient.address.address_detail.postalCode},
+                        ${packageInfoFromCatch.parcel.recipient.address.address_detail.country.name}`}
                     </p>
                 </div>
                  : null}
+                 {packageInfo? 
+                <div>
+                    <p style={{color: "yellow"}}>Tracking Number: {packageInfo.label.tracking_number}</p>
+                    <p>Model: {packageInfo.label.model}</p>
+                    <p>Status: {packageInfo.status}</p> 
+                    <div>Items: {packageInfo.parcel_tracking_items.map(item => {
+                        return <div>
+                            <p style={{color: "brown"}}>Item id: {item.id}</p>
+                            <p>Tracking code: {item.tracking_code.code}</p>
+                            <p>Location: 
+                                {` ${item.city}, 
+                                ${item.state},
+                                ${item.country.name}
+                                `}</p>
+                        </div>
+                    })}
+                    </div>
+                </div> : null}
             </div>
         </div>
     </div>

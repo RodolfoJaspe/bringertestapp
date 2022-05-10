@@ -1,0 +1,10 @@
+.landing {
+    display: flex;
+    flex-direction: column;
+    height: 10vh;
+    justify-content: space-around;
+}
+
+.landing button {
+    cursor: pointer;
+}
