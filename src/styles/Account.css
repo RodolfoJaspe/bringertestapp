@@ -1,0 +1,13 @@
+.item {
+    cursor: pointer;
+    width: 50%;
+}
+
+.item:hover {
+    color: gray
+}
+
+.items-div {
+    display:flex;
+    flex-wrap: wrap ;
+}

@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Logout from './Logout';
 import { currentUrl } from '../utils/backendUrl';
+import Item from './Item';
+import "../styles/Account.css"
 
 function Account() {
 
@@ -17,11 +19,13 @@ function Account() {
         Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6ImFjY2VzcyJ9.eyJpYXQiOjE2NTExNDY2MTcsImV4cCI6MTY4MjY4MjYxNywiYXVkIjoiaHR0cHM6Ly9icmluZ2VycGFyY2VsLmNvbSIsImlzcyI6ImZlYXRoZXJzIiwic3ViIjoiNTI1eXM2YWh4d3UyIiwianRpIjoiMDY5YjIxZTgtNTdjZi00YmE2LTk1ODctMjJkYmViMDg4OTNhIn0.wTcGGMWd6wf3F68K6cgZcmEyiNv6EfVZsvttbzIwtIE"
     }
 
-    const {user_id} = useParams()
-    const [user, setUser] = useState()
-    const [trackingNumber, setTrackingNumber] = useState("BPS65O4WYLBWWBR")
-    const [packageInfo, setPackageInfo] = useState(null)
-    const [packageInfoFromCatch, setPackageInfoFromCatch] = useState(null)
+    const {user_id} = useParams();
+    const [user, setUser] = useState();
+    const [trackingNumber, setTrackingNumber] = useState("BPSY1Y78Q1B7ZBR");
+    const [packageInfo, setPackageInfo] = useState(null);
+    const [packageInfoFromCatch, setPackageInfoFromCatch] = useState(null);
+    const [item, setItem] = useState(); // item that gets passed into the Item component if clicked //
+    const [itemPopupTrigger, setItemPopupTrigger] = useState(false) // item popup opens on true // 
 
     useEffect(() => {
         fetchAccount(user_id)
@@ -61,6 +65,11 @@ function Account() {
     const formSubmit = e => {
         e.preventDefault()
         search(trackingNumber)
+    }
+
+    const openItem = (item) => {
+        setItem(item);
+        setItemPopupTrigger(true)
     }
 
   return (
@@ -103,21 +112,28 @@ function Account() {
                     <p style={{color: "yellow"}}>Tracking Number: {packageInfo.label.tracking_number}</p>
                     <p>Model: {packageInfo.label.model}</p>
                     <p>Status: {packageInfo.status}</p> 
-                    <div>Items: {packageInfo.parcel_tracking_items.map(item => {
-                        return <div>
-                            <p style={{color: "brown"}}>Item id: {item.id}</p>
-                            <p>Tracking code: {item.tracking_code.code}</p>
-                            <p>Location: 
-                                {` ${item.city}, 
-                                ${item.state},
-                                ${item.country.name}
-                                `}</p>
+                    <div>
+                        <h3 style={{textDecoration:"underline"}}>
+                            Items
+                        </h3> 
+                        <div className='items-div'>
+                        {packageInfo.parcel_tracking_items.map(item => {
+                            return <div 
+                                        key={item.id} 
+                                        onClick={() => openItem(item)}
+                                        className="item">
+                                        <p>{item.id}</p>
+                            </div>
+                        })}
                         </div>
-                    })}
                     </div>
                 </div> : null}
             </div>
         </div>
+        <Item 
+            item={item}
+            itemPopupTrigger={itemPopupTrigger}
+            setItemPopupTrigger={setItemPopupTrigger}/>
     </div>
   )
 }
