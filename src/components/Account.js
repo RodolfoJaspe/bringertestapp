@@ -78,7 +78,9 @@ function Account() {
         {user? <h3>Welcome {user.username}</h3>: null} 
         <div>
             <p>Enter your tracking number</p>
-            <form onSubmit={formSubmit}>
+            <form 
+                onSubmit={formSubmit}
+                className="tracking-form">
                 <input 
                     name="trackingNumber"
                     id="trackingNumber"

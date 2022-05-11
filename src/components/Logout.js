@@ -9,7 +9,10 @@ function Logout () {
         navigate("/")
     }
     return (
-        <button onClick={() => logout()}>Logout</button>
+        <button 
+            onClick={() => logout()}
+            className="logout-button"
+            >Logout</button>
     )
 }
 

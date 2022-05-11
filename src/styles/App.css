@@ -8,7 +8,7 @@
 }
 
 .app-main-div {
-  background-color: rgba(10, 25, 41, 0.95);
+  background-color: rgb(10, 25, 41);
   padding: 10vh;
   padding-top: 0;
   width: 60%;
@@ -22,4 +22,52 @@
   color: white;
 }
 
+.logout-button {
+    background-color: rgb(10, 25, 41);
+    border-radius: .5vw;
+    color: brown;
+    border: 1px solid brown;
+    padding: .5vw 1vw;
+    cursor: pointer;
+}
+
+button {
+    background-color: rgb(10, 25, 41);
+    border-radius: .5vw;
+    color: rgb(51, 153, 255);
+    border: 1px solid rgb(51, 153, 255);
+    padding: .5vw 1vw;
+    cursor: pointer;
+    max-width: 100px;
+}
+
+.user-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30vw;
+}
+
+.user-form-inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 10vh;
+    margin-bottom: 4vh;
+}
+
+.user-form-inputs input{
+    width: 60%;
+    background-color: rgb(10, 25, 41);
+    color: white;
+    border: none;
+    border-bottom: 1px solid gray;
+    text-align: center;
+}
+
+.username-password-div {
+    display: flex;
+    justify-content: space-between;
+}
 

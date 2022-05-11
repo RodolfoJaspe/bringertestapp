@@ -42,20 +42,22 @@ function Login() {
 
   return (
     <div>
-        <form onSubmit={formSubmit}>
-            <div>
-                <h2>Sign in</h2>
-                <label htmlFor="username">Username
+        <form onSubmit={formSubmit} className="user-form">
+            <h2>Sign in</h2>
+            <div className='user-form-inputs'>
+                <div className='username-password-div'>
+                    <label htmlFor="username">Username</label>
                     <input
                         name="username"
                         id="username"
                         type="text"
                         onChange={changeHandler}
                         value={user.username}
-                        placeholder="enter a username" 
+                        placeholder="enter an username" 
                     />
-                </label>
-                <label htmlFor="password">Password
+                </div>
+                <div className='username-password-div'>
+                    <label htmlFor="password">Password</label>
                     <input
                         name="password"
                         id="password"
@@ -64,9 +66,9 @@ function Login() {
                         value={user.password}
                         placeholder="enter a password" 
                     />
-                </label>
-                <button>Submit</button>
-            </div>         
+                </div>
+            </div>
+            <button>Submit</button> 
         </form>
         <div>
             <p>not a member?</p>
